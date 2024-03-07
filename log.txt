@@ -1,7 +1,12 @@
 LOG
 _______________________________________________________________________________________________
-1. Meetings: everyone attends
-  3/6/2024 4:00-6:00: Determine what we want to do for our project and split up who will do what
+1. Meetings: 
+  Meeting #1: 2/20/2024 30 minutes (Determine dataset)
+  Meeting #2: 3/6/2024 2 hours
 
 2. Tasks
+  Jamie:
+  Naomi:
+  Haley:
+  Jadyn:
   
