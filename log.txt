@@ -5,7 +5,7 @@ ________________________________________________________________________________
   Meeting #2: 3/6/2024 2 hours
 
 2. Tasks
-  Jamie:
+  Jamie: Make metrics methods (accuracy -- flight object)
   Naomi: Determine Distance/Similarity Metric, implement a method to compute this for each "point"
   Haley:
   Jadyn:
