@@ -6,7 +6,7 @@ ________________________________________________________________________________
 
 2. Tasks
   Jamie:
-  Naomi:
+  Naomi: Determine Distance/Similarity Metric, implement a method to compute this for each "point"
   Haley:
   Jadyn:
   
