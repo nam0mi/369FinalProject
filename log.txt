@@ -7,7 +7,7 @@ ________________________________________________________________________________
 2. Tasks
   Jamie: Make metrics methods (accuracy, precision, recall, FP rate (delay is success) -- flight object as input)
   Naomi: Determine Distance/Similarity Metric, and implement a method to compute this for each "point"
-  Haley:
-  Jadyn:
+  Haley: Make predictions
+  Jadyn: Cross validation
   
 The United States Federal Aviation Administration (FAA) considers a flight to be delayed when it is 15 minutes later than its scheduled time.
