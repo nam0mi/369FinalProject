@@ -13,6 +13,7 @@ import shapeless.syntax.std.tuple.productTupleOps
 import java.io.{File, PrintWriter}
 import scala.collection._
 import scala.util.Try
+import scala.util.matching.Regex
 
 object Main {
   case class Airline(code: String, name: String)
@@ -52,6 +53,67 @@ object Main {
     if (delays.toDouble / k > 0.5) 1 else 0
   }
 
+  def calculateAccuracy(predictionsAndActual: Seq[(Int, Int)]): Double = {
+    val totalExamples = predictionsAndActual.length
+    if (totalExamples == 0) {
+      println("Error: Empty input sequence.")
+      return 0.0
+    }
+
+    val correctPredictions = predictionsAndActual.count { case (predicted, actual) => predicted == actual }
+    val accuracy = correctPredictions.toDouble / totalExamples.toDouble * 100.0
+    accuracy
+  }
+
+  def calculatePrecision(predictionsAndActual: Seq[(Int, Int)]): Double = {
+    val truePositives = predictionsAndActual.count { case (predicted, actual) => predicted == 1 && actual == 1 }
+    val falsePositives = predictionsAndActual.count { case (predicted, actual) => predicted == 1 && actual == 0 }
+
+    if (truePositives + falsePositives == 0) {
+      println("Error: No positive predictions.")
+      return 0.0
+    }
+
+    val precision = truePositives.toDouble / (truePositives + falsePositives).toDouble
+    precision
+  }
+
+  def calculateRecall(predictionsAndActual: Seq[(Int, Int)]): Double = {
+    val truePositives = predictionsAndActual.count { case (predicted, actual) => predicted == 1 && actual == 1 }
+    val falseNegatives = predictionsAndActual.count { case (predicted, actual) => predicted == 0 && actual == 1 }
+
+    if (truePositives + falseNegatives == 0) {
+      println("Error: No actual positive cases.")
+      return 0.0
+    }
+
+    val recall = truePositives.toDouble / (truePositives + falseNegatives).toDouble
+    recall
+  }
+
+  def calculateF1Score(predictionsAndActual: Seq[(Int, Int)]): Double = {
+    val precision = calculatePrecision(predictionsAndActual)
+    val recall = calculateRecall(predictionsAndActual)
+
+    if (precision + recall == 0) {
+      println("Error: Precision and recall both are zero.")
+      return 0.0
+    }
+
+    val f1Score = 2 * (precision * recall) / (precision + recall)
+    f1Score
+  }
+
+  def generateConfusionMatrix(predictionsAndActual: Seq[(Int, Int)]): Array[Array[Int]] = {
+    val matrixSize = 2
+    val confusionMatrix = Array.ofDim[Int](matrixSize, matrixSize)
+
+    for ((predicted, actual) <- predictionsAndActual) {
+      confusionMatrix(actual)(predicted) += 1
+    }
+    confusionMatrix
+  }
+
 
   def main(args: Array[String]): Unit = {
     Logger.getLogger("org").setLevel(Level.OFF)
@@ -86,6 +148,23 @@ object Main {
       println(s"Predicted: $prediction, Actual: ${testInstance.isDelayed}")
     }
     writer.close()
+
+    val result: Seq[(Int, Int)] = sc.textFile("C:\\Users\\13035\\OneDrive\\Documents\\369FinalProject\\src\\predictions_vs_actuals.txt")
+      .flatMap { line =>
+        val pattern = "Predicted: (\\d+), Actual: (\\d+)".r
+        line match {
+          case pattern(predicted, actual) => Some((predicted.toInt, actual.toInt))
+          case _ => None // Ignore lines that don't match the pattern
+        }
+      }
+      .collect()
+      .toSeq
+
+    val accuracy = calculateAccuracy(result)
+    val precision = calculatePrecision(result)
+    val recall = calculateRecall(result)
+    val f1score = calculateF1Score(result)
+    val confusionMatrix = generateConfusionMatrix(result)
 
     sc.stop()
 
