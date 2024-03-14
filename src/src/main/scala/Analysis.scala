@@ -20,15 +20,15 @@ object Analysis {
     case class Flight(year: Int, month: Int, day: Int, day_of_week: Int, airline: String, flight_num: Int,
                       origin: String, dest: String, scheduled_depart: Int, actual_depart: Int, delay: Int, is_delayed: Boolean)
 
-    val airports = sc.textFile("airports.csv")
+    val airports = sc.textFile("src/airports.csv")
       .map(_.split(",").map(_.trim))
       .map(arr => Airport(arr(0), arr(1), arr(2), arr(3)))
 
-    val airlines = sc.textFile("airlines.csv")
+    val airlines = sc.textFile("src/airlines.csv")
       .map(_.split(",").map(_.trim))
       .map(arr => Airline(arr(0), arr(1)))
 
-    val flights = sc.textFile("flights.csv")
+    val flights = sc.textFile("src/flights.csv")
       .map(_.split(",").map(_.trim))
       .filter(_ (0) != "YEAR")
       .filter(arr => !arr.exists(_.isEmpty))
