@@ -9,6 +9,6 @@ ________________________________________________________________________________
   Jamie: Make metrics methods (accuracy, precision, recall, FN rate (delay is failure) -- flight object as input) (1 hr), debugging (1hr), presentation (30min)
   Naomi: Determine Distance/Similarity Metric (1.5hr), and implement a method to compute this for each "point" (2 hrs),
         implement KNN model and predictions (2 hrs)
-  Haley: Make predictions
+  Haley: Analyze metrics of the data (2 hrs), report (0.5 hrs) 
   Jadyn: Data analysis + slides (2.5 hours), report (1.5 hours)
   
